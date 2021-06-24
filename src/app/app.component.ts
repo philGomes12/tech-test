@@ -82,22 +82,37 @@ export class AppComponent implements OnInit {
         this.dataSource.push(this.oldDataSource[j])
       }
     }
+    this.topTenPerYear = false;
+    this.topTen = true;
   }
 
   showTopTenPerYar(value){
     this.topTenPerYearText = 'Top 10 Revenue ' + value;
     this.dataSource = [];
+    this.aux = [];
+    console.log('1.1: ', this.aux)
     for(let i = 0; i < this.oldDataSource.length; i++){
       if(this.oldDataSource[i]['year'] == value){
-        this.dataSource.push(this.oldDataSource[i])
+        this.aux.push(this.oldDataSource[i]['revenue'])
+      }
+    }
+
+    let x = this.aux.sort((x, y) => y - x).slice(0, 10)
+    for(let j = 0; j < this.oldDataSource.length; j++){
+      if(this.oldDataSource[j]['year'] == value){
+        if(x.includes(this.oldDataSource[j]['revenue'])){
+          this.dataSource.push(this.oldDataSource[j])
+        }
       }
     }
     this.topTenPerYear = true;
+    this.topTen = false;
   }
 
   refreshTable(){
     this.topTenPerYearText = 'Top 10 Revenue per Year';
     this.dataSource = this.oldDataSource;
     this.topTenPerYear = false;
+    this.topTen = false;
   }
 }
