@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{data?.title}}</h2>
+
+<mat-dialog-content>
+  <p>
+    <span>Year</span><br>
+    <span>{{data?.year}}</span>
+  </p>
+  <p>
+    <span>Genre</span><br>
+    <span>{{data?.genre}}</span>
+  </p>
+  <p>
+    <span>Description</span><br>
+    <span>{{data?.description}}</span>
+  </p>
+  <p>
+    <span>Director</span><br>
+    <span>{{data?.director}}</span>
+  </p>
+  <p>
+    <span>Actors</span><br>
+    <span>{{data?.actors}}</span>
+  </p>
+  <p>
+    <span>Runtime</span><br>
+    <span>{{data?.runtime}} mins</span>
+  </p>
+  <p>
+    <span>Rating</span><br>
+    <span>{{data?.rating}}</span>
+  </p>
+  <p>
+    <span>Votes</span><br>
+    <span>{{data?.votes}}</span>
+  </p>
+  <p>
+    <span>Revenue</span><br>
+    <span>{{data?.revenue | currency}}</span>
+  </p>
+  <p>
+    <span>Metascore</span><br>
+    <span>{{data?.metascore}}</span>
+  </p>
+
+<p> {{data?.body}} </p>
+</mat-dialog-content>
+
+<mat-dialog-actions *ngFor="let button of data.buttons; let i = index">
+    <button mat-raised-button [color]="data.buttons[i].btn.color" (click)="close(data.buttons[i].btn.text)">{{data.buttons[i].btn.text}}</button>
+</mat-dialog-actions>
