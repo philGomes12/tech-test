@@ -16,6 +16,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CheckMovieModalComponent } from './check-movie-modal/check-movie-modal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { CheckMovieModalComponent } from './check-movie-modal/check-movie-modal.
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxPaginationModule,
+    InfiniteScrollModule,
   ],
   providers: [
     HttpClientModule,
@@ -46,3 +52,5 @@ import { CheckMovieModalComponent } from './check-movie-modal/check-movie-modal.
   schemas:  [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

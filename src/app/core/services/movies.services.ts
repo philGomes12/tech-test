@@ -8,8 +8,9 @@ export class MoviesServices{
 
   apiBaseUrl = environment.apiBaseUrl
 
-  getAllMovies(){
-    return this.http.get(this.apiBaseUrl)
+  getAllMovies(page: any){
+    let uri = `${this.apiBaseUrl}?page=${page}&size=20`
+    return this.http.get(uri)
   }
 
   getMovieById(idMovie: string){

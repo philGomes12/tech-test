@@ -8,12 +8,6 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CheckMovieModalComponent } from './check-movie-modal/check-movie-modal.component';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,19 +23,17 @@ export class AppComponent implements OnInit {
   topTenPerYear = false;
   topTenPerYearText = 'Top 10 Revenue per Year'
   aux = [];
-  years = []
+  years = [];
+  page: any = 0;
+  throttle = 0;
+  distance = 2;
 
   selectedValue: string;
   selectedCar: string;
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
 
   ngOnInit (){
-    this.movieServices.getAllMovies().subscribe(
+    this.movieServices.getAllMovies(this.page).subscribe(
       resp => {
         this.dataSource = resp['content'];
         this.oldDataSource = resp['content'];
@@ -53,8 +45,15 @@ export class AppComponent implements OnInit {
         this.years = this.aux.sort(function(a, b){return b-a})
       }
     )
+  }
 
-
+  onScroll(): void {
+    this.movieServices.getAllMovies(++this.page).subscribe(
+      resp => {
+        this.dataSource.push(...resp['content'])
+      }
+    )
+    this.refreshTable()
   }
 
   openDialog(idMovie: string){
@@ -69,19 +68,8 @@ export class AppComponent implements OnInit {
   }
 
   showTopTen(){
-    this.dataSource = [];
-    this.aux = [];
-    for(let i = 0; i < this.oldDataSource.length; i++){
-      if(this.oldDataSource[i]['revenue']){
-        this.aux.push(this.oldDataSource[i]['revenue'])
-      }
-    }
-    let x = this.aux.sort((a, b) => b - a).slice(0, 10)
-    for(let j = 0; j < this.oldDataSource.length; j++){
-      if(x.includes(this.oldDataSource[j]['revenue'])){
-        this.dataSource.push(this.oldDataSource[j])
-      }
-    }
+    this.dataSource = this.oldDataSource && this.oldDataSource.length > 0
+    && this.oldDataSource.filter(cv => cv.revenue).sort((a, b) => Number(b.revenue) - Number(a.revenue)).slice(0, 10)
     this.topTenPerYear = false;
     this.topTen = true;
   }
@@ -90,7 +78,6 @@ export class AppComponent implements OnInit {
     this.topTenPerYearText = 'Top 10 Revenue ' + value;
     this.dataSource = [];
     this.aux = [];
-    console.log('1.1: ', this.aux)
     for(let i = 0; i < this.oldDataSource.length; i++){
       if(this.oldDataSource[i]['year'] == value){
         this.aux.push(this.oldDataSource[i]['revenue'])
@@ -105,11 +92,15 @@ export class AppComponent implements OnInit {
         }
       }
     }
+
+    this.dataSource = this.dataSource.sort((a, b) => b['revenue'] - a['revenue'])
+
     this.topTenPerYear = true;
     this.topTen = false;
   }
 
   refreshTable(){
+    console.log('2')
     this.topTenPerYearText = 'Top 10 Revenue per Year';
     this.dataSource = this.oldDataSource;
     this.topTenPerYear = false;

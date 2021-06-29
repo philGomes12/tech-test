@@ -1,50 +1,60 @@
-<h2 mat-dialog-title>{{data?.title}}</h2>
+<div class="container">
+  <div class="row">
+    <h2 mat-dialog-title style="color: #78849E">{{data?.title}}</h2>
+    <mat-dialog-content>
+      <p>
+        <span style="color: #78849EB9">Year</span><br>
+        <span style="color: #78849E">{{data?.year}}</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Genre</span><br>
+        <span style="color: #78849E">{{data?.genre}}</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Description</span><br>
+        <span style="color: #78849E">{{data?.description}}</span>
+      </p>
+      <div class="row">
+        <div class="col-3">
+          <p>
+            <span style="color: #78849EB9">Director</span><br>
+            <span style="color: #00BAFF">{{data?.director}}</span>
+          </p>
+        </div>
+        <div class="col-9">
+          <p>
+            <span style="color: #78849EB9">Actors</span><br>
+            <span style="color: #00BAFF">{{data?.actors}}</span>
+          </p>
+        </div>
+      </div>
+      <p>
+        <span style="color: #78849EB9">Runtime</span><br>
+        <span style="color: #78849E">{{data?.runtime}} mins</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Rating</span><br>
+        <span style="color: #78849E">{{data?.rating}}</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Votes</span><br>
+        <span style="color: #78849E">{{data?.votes}}</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Revenue</span><br>
+        <span style="color: #78849E">{{data?.revenue | currency}}</span>
+      </p>
+      <p>
+        <span style="color: #78849EB9">Metascore</span><br>
+        <span style="color: #78849E">{{data?.metascore}}</span>
+      </p>
 
-<mat-dialog-content>
-  <p>
-    <span>Year</span><br>
-    <span>{{data?.year}}</span>
-  </p>
-  <p>
-    <span>Genre</span><br>
-    <span>{{data?.genre}}</span>
-  </p>
-  <p>
-    <span>Description</span><br>
-    <span>{{data?.description}}</span>
-  </p>
-  <p>
-    <span>Director</span><br>
-    <span>{{data?.director}}</span>
-  </p>
-  <p>
-    <span>Actors</span><br>
-    <span>{{data?.actors}}</span>
-  </p>
-  <p>
-    <span>Runtime</span><br>
-    <span>{{data?.runtime}} mins</span>
-  </p>
-  <p>
-    <span>Rating</span><br>
-    <span>{{data?.rating}}</span>
-  </p>
-  <p>
-    <span>Votes</span><br>
-    <span>{{data?.votes}}</span>
-  </p>
-  <p>
-    <span>Revenue</span><br>
-    <span>{{data?.revenue | currency}}</span>
-  </p>
-  <p>
-    <span>Metascore</span><br>
-    <span>{{data?.metascore}}</span>
-  </p>
+      <p> {{data?.body}} </p>
+    </mat-dialog-content>
 
-<p> {{data?.body}} </p>
-</mat-dialog-content>
-
-<mat-dialog-actions *ngFor="let button of data.buttons; let i = index">
-    <button mat-raised-button [color]="data.buttons[i].btn.color" (click)="close(data.buttons[i].btn.text)">{{data.buttons[i].btn.text}}</button>
-</mat-dialog-actions>
+    <mat-dialog-actions *ngFor="let button of data.buttons; let i = index">
+      <button mat-raised-button [color]="data.buttons[i].btn.color"
+        (click)="close(data.buttons[i].btn.text)">{{data.buttons[i].btn.text}}</button>
+    </mat-dialog-actions>
+  </div>
+</div>

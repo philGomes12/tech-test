@@ -11,9 +11,7 @@ export class CheckMovieModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CheckMovieModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit(): void {
-    console.log('1: ', this.data)
-  }
+  ngOnInit(): void {}
 
   close(value: any) {
     this.dialogRef.close(value);
