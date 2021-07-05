@@ -1,0 +1,88 @@
+<style>
+  td{
+    border-bottom-color: #d6dadd !important;
+  }
+  button:hover{
+    background-color: #00BAFF;
+    color: #012433 !important;
+  }
+  button:active{
+    background-color: #00BAFF;
+    color: #012433 !important;
+  }
+</style>
+  <div class="row ">
+    <div style="top: 0px;left: 0pxs;height: 50px;background: var(--unnamed-color-012433) 0% 0% no-repeat padding-box;background: #012433 0% 0% no-repeat padding-box;opacity: 1;"></div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 style="margin-top: 32px; color:#386071">Movie Ranking</h1>
+      </div>
+    </div>
+    <div class="row buttons-row">
+      <div class="col-4" *ngIf="actorSelected">
+        <button  type="button" class="btn btn-outline-dark" [style]="style">{{actorName}}</button>
+        <span (click)="refreshTable()"><mat-icon style="color: #536B7A; margin-left: 7%;">refresh</mat-icon></span>
+      </div>
+      <div class="col-2" *ngIf="!actorSelected">
+        <button (click)="showTopTen()" type="button" class="btn btn-outline-dark" [style]="style">Top 10 Revenue</button>
+        <span *ngIf="topTen" (click)="refreshTable()"><mat-icon style="color: #536B7A; margin-left: 7%;">refresh</mat-icon></span>
+      </div>
+      <div class="col-4" *ngIf="!actorSelected">
+        <button type="button" class="btn btn-outline-dark" [style]="style1">
+          <div class="container">
+            <div class="row">
+              <div class="col-10"  >{{topTenPerYearText}}</div>
+              <div class="col-1">
+                <mat-select (ngModelChange)="showTopTenPerYar($event)" [(ngModel)]="selectedValue" name="food">
+                  <mat-option style="color: #536B7A; text-align: center; margin-left: 17px; margin-right: 17px;">Select year</mat-option>
+                  <mat-option *ngFor="let year of years" [value]="year" style="color: #536B7A; text-align: center; margin-left: 17px; margin-right: 17px;">
+                    {{year}}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </button>
+        <span *ngIf="topTenPerYear" (click)="refreshTable()" style="color: #536B7A; margin-left: 7%;"><mat-icon>refresh</mat-icon></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table>
+          <thead>
+            <tr>
+              <th style="color: #0B749B;">RANKING</th>
+              <th style="color: #0B749B;">TITLE</th>
+              <th style="color: #0B749B;">YEAR</th>
+              <th style="color: #0B749B;">REVENUE</th>
+              <th style="color: #0B749B;"></th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let content of dataSource | slice: (page-1) * pageSize : page * pageSize">
+            <tr>
+              <td style="color: #536B7A;">
+                {{content?.rank}}
+              </td>
+              <td style="color: #536B7A;">
+                {{content?.title}}
+              </td>
+              <td style="color: #536B7A;">
+                {{content?.year}}
+              </td>
+              <td style="color: #536B7A;">
+                {{content?.revenue}}
+              </td>
+              <td style="color: #0B749B;">
+                <button style="color: #536B7A; background-color: transparent; border: none;" (click)="goToSelectedMovie(content.id)">
+                  <mat-icon>remove_red_eye</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ngb-pagination *ngIf="pagination" [collectionSize]="dataSource.length" [(page)]="page" [maxSize]="5" [rotate]="true"></ngb-pagination>
+      </div>
+    </div>
+  </div>

@@ -1,6 +1,9 @@
 <div class="container">
   <div class="row">
-    <h2 mat-dialog-title style="color: #78849E">{{data?.title}}</h2>
+    <h2 mat-dialog-title style="color: #78849E; font-size: 32px; margin-left: -13px;">{{data?.title}}</h2>
+    <div class="col-1">
+      <span style="border-bottom: 1px solid;"></span>
+    </div>
     <mat-dialog-content>
       <p>
         <span style="color: #78849EB9">Year</span><br>
@@ -18,13 +21,15 @@
         <div class="col-3">
           <p>
             <span style="color: #78849EB9">Director</span><br>
-            <span style="color: #00BAFF">{{data?.director}}</span>
+            <span style="color: #00BAFF"><strong>{{data?.director}}</strong></span>
           </p>
         </div>
         <div class="col-9">
           <p>
             <span style="color: #78849EB9">Actors</span><br>
-            <span style="color: #00BAFF">{{data?.actors}}</span>
+            <span *ngFor="let actor of actors" style="color: #00BAFF; cursor: pointer;">
+              <strong><a (click)="homeWithActor(actor)">{{actor}}</a></strong>,
+            </span>
           </p>
         </div>
       </div>
@@ -51,10 +56,5 @@
 
       <p> {{data?.body}} </p>
     </mat-dialog-content>
-
-    <mat-dialog-actions *ngFor="let button of data.buttons; let i = index">
-      <button mat-raised-button [color]="data.buttons[i].btn.color"
-        (click)="close(data.buttons[i].btn.text)">{{data.buttons[i].btn.text}}</button>
-    </mat-dialog-actions>
   </div>
 </div>
